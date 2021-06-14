@@ -12,6 +12,8 @@ target 'Work' do
     :hermes_enabled => false
   )
 
+  pod 'react-native-sqlite-storage', :path => '../node_modules/react-native-sqlite-storage'
+
   target 'WorkTests' do
     inherit! :complete
     # Pods for testing

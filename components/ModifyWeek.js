@@ -33,8 +33,9 @@ export default class ModifyWeek extends Component {
   }
 
   touchableDay(day, text){
+    console.log(`data: ${day} id:${this.props.route.params.id} text: ${text}`);
     return(
-      <TouchableOpacity onPress={() => this.props.route.params.navigation.navigate("UpdateDay", {data: day})}>
+      <TouchableOpacity onPress={() => this.props.route.params.navigation.navigate("UpdateDay", {data: day, id: this.props.route.params.id, day: text})}>
         <Day time={day}  day={text}/>
       </TouchableOpacity>
     );

@@ -6,7 +6,15 @@ export default class ModifyDay extends Component{
 
   constructor(props){
     super(props);
+
+    this.handleOnPress = this.handleOnPress.bind(this);
+
   }
+
+handleOnPress(){
+  this.props.handleOnPress(this.props.route.params.id, this.props.route.params.day, this.props.route.params.data);
+}
+
 
 
   render(){
@@ -26,6 +34,7 @@ export default class ModifyDay extends Component{
         <Picker time={this.props.route.params.data.soir.fin} />
       </View>
 
+      <Button title="Update" onPress={this.handleOnPress} />
       </View>
 
     );

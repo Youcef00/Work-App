@@ -9,7 +9,7 @@ export default class Item extends Component {
   }
 
   handleOnPress(){
-    this.props.navigation.navigate('UpdateWeek', {data: this.props.data, navigation: this.props.navigation});
+    this.props.navigation.navigate('UpdateWeek', {data: this.props.data, navigation: this.props.navigation, id:this.props.data.id});
   }
 
   render(){

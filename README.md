@@ -8,6 +8,7 @@ commands to run:
 
 # Personal notes:
 * don't forget to update the icons on ios
+* link DB for ios
 
 # Libraries to remove:
 

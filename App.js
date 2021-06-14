@@ -8,8 +8,11 @@ import Picker from './components/Picker.js';
 import ModifyDay from './components/ModifyDay.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+console.disableYellowBox = true;
 const Stack = createStackNavigator();
+
+
 const DATA = [
   {
     id: '1',
@@ -163,17 +166,7 @@ const DATA = [
 
 
 ];
-const jour=
-  {
-    matin:{
-      debut: '11:15',
-      fin: '15:00'
-    },
-    soir:{
-      debut: '19:00',
-      fin: '23:00'
-    },
-  };
+
 
 
 export default class App extends Component{
@@ -181,13 +174,45 @@ export default class App extends Component{
   constructor(){
     super();
     this.state = {
-      weeks: [],
+      data: [],
 
     };
 
+
+
     this.handleDatePickerConfirm = this.handleDatePickerConfirm.bind(this);
     this.hideDatePicker = this.hideDatePicker.bind(this);
+    this.storeData = this.storeData.bind(this);
+    this.getData = this.getData.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
   }
+
+  componentDidMount(){
+
+    this.getData();
+  }
+
+  componentDidUpdate(){
+    console.log(this.state.data[0].Lundi)
+  }
+  async storeData(){
+  try {
+    await AsyncStorage.setItem('data', JSON.stringify(DATA))
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+async getData() {
+  try {
+    const value = await AsyncStorage.getItem('data');
+    this.setState({
+      data: value != null ? JSON.parse(value) : [],
+    });
+  } catch(e) {
+    console.log(e);
+  }
+}
 
   //<ModifyWeek data={DATA} />
   handleDatePickerConfirm(date){
@@ -198,6 +223,17 @@ export default class App extends Component{
   hideDatePicker(){
     this.setState({isVisible: false});
   }
+
+  handleUpdate(id, day, data){
+    const newData = [...this.state.data];
+    newData.forEach((d) => {
+      if(d.id == id){
+        console.log(`found => ${d[day].matin.debut} data:  ${data.matin.debut}`);
+        d[day] = data;
+      }
+    });
+    this.setState({data: newData});
+  }
   render(){
     //<ModifyWeek data={DATA}/>
     return(
@@ -205,7 +241,7 @@ export default class App extends Component{
         <Stack.Navigator>
           <Stack.Screen name="Home" options={{title: "Welcome Home"}}>
 
-            {props => <Home {...props} data={DATA} /> }
+            {props => <Home {...props} data={this.state.data} /> }
 
           </Stack.Screen>
 
@@ -218,8 +254,9 @@ export default class App extends Component{
           <Stack.Screen
             name="UpdateDay"
             options={{title: "Update Day"}}
-            component={ModifyDay}
-          />
+          >
+          {props => <ModifyDay {...props} handleOnPress={this.handleUpdate} />}
+          </Stack.Screen>
 
         </Stack.Navigator>
       </NavigationContainer>
