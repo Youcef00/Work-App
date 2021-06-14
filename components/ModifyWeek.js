@@ -1,18 +1,19 @@
 import React , {Component} from 'react';
-import {Text, View, TouchableOpacity, Button} from 'react-native';
+import {Text, View, TouchableOpacity, Button, StyleSheet, ScrollView} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import Picker from './Picker.js';
 
-const Day = ({time}) => {
+const Day = ({time, day}) => {
   return (
     <View style={{margin: 20}}>
+    <Text style={{color: 'grey'}}>{day}</Text>
       <View style={{flexDirection: 'row'}}>
-      <Text style={{marginRight: 10}}>Matin</Text>
+      <View style={[Styles.dayStandard, Styles.day]}><Text style={{marginRight: 10}}>Matin</Text></View>
       <Text style={{marginRight: 10}}>{time.matin.debut} -- {time.matin.fin}</Text>
       </View>
 
       <View style={{flexDirection: 'row'}}>
-      <Text style={{marginRight: 10}}>Soir</Text>
+      <View style={[Styles.dayStandard, Styles.night]}><Text style={{marginRight: 10}}>Soir</Text></View>
       <Text style={{marginRight: 10}}>{time.soir.debut} -- {time.soir.fin}</Text>
       </View>
     </View>
@@ -22,55 +23,56 @@ const Day = ({time}) => {
 export default class ModifyWeek extends Component {
   constructor(props){
     super(props);
-    this.state= {
 
-      // week:{
-      //   Lundi: {matin : new Date(), soir: new Date()},
-      //   Mardi: {matin : new Date(), soir: new Date()},
-      //   Mercredi: {matin : new Date(), soir: new Date()},
-      //   Jeudi: {matin : new Date(), soir: new Date()},
-      //   Vendredii: {matin : new Date(), soir: new Date()},
-      //   Samedi: {matin : new Date(), soir: new Date()},
-      //   Dimanche: {matin : new Date(), soir: new Date()},
-      // }
-    };
-  
-
-    this.touchableTime = this.touchableTime.bind(this);
-    this.DATA = this.props.data;
+    this.touchableDay = this.touchableDay.bind(this);
+    this.handleOnPress = this.handleOnPress.bind(this);
   }
 
+  handleOnPress(day){
+    this.props.route.params.navigation.navigate("UpdateDay", {data: day})
+  }
 
-
-
-
-
-
-
-
-  touchableTime(time){
+  touchableDay(day, text){
     return(
-      <Picker time={time} />
+      <TouchableOpacity onPress={() => this.props.route.params.navigation.navigate("UpdateDay", {data: day})}>
+        <Day time={day}  day={text}/>
+      </TouchableOpacity>
     );
   }
   render(){
 
     return(
-        <View>
+        <View style={{flex:1, paddingVertical: 20}}>
             <Text> Update Week </Text>
-            <Day time={this.props.data.Lundi} />
-            <Day time={this.props.data.Mardi} />
-            <Day time={this.props.data.Mercredi} />
-            <Day time={this.props.data.Jeudi} />
-            <Day time={this.props.data.Vendredi} />
-            <Day time={this.props.data.Samedi} />
-            <Day time={this.props.data.Dimanche} />
+            <ScrollView >
+              {this.touchableDay(this.props.route.params.data.Lundi, "Lundi")}
+              {this.touchableDay(this.props.route.params.data.Mardi, "Mardi")}
+              {this.touchableDay(this.props.route.params.data.Mercredi, "Mercredi")}
+              {this.touchableDay(this.props.route.params.data.Jeudi, "Jeudi")}
+              {this.touchableDay(this.props.route.params.data.Vendredi, "Vendredi")}
+              {this.touchableDay(this.props.route.params.data.Samedi, "Samedi")}
+              {this.touchableDay(this.props.route.params.data.Dimanche, "Dimanche")}
+            </ScrollView>
 
         </View>
     );
   }
 }
-
+const Styles = StyleSheet.create(
+  {
+    dayStandard: {
+      borderRightWidth: 5,
+      borderStyle: 'solid',
+      width: 70,
+    },
+    day: {
+      borderRightColor: 'cyan',
+    },
+    night: {
+      borderRightColor: 'purple',
+    },
+  }
+);
 /*
 <View >
 <DateTimePickerModal

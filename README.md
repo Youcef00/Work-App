@@ -5,3 +5,9 @@ commands to run:
 % react-native start
 % react-native run-android
 ```
+
+# Personal notes:
+* don't forget to update the icons on ios
+
+# Libraries to remove:
+

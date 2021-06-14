@@ -14,7 +14,7 @@ export default class Home extends Component  {
     return (
       <View style={{flex: 1}}>
       <Text> Home </Text>
-      <Weeks />
+      <Weeks navigation={this.props.navigation} DATA={this.props.data}/>
 
       </View>
     );
