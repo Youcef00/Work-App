@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 export default class Picker extends Component{
   static propTypes = {
     time: PropTypes.string,
-    
+
   }
   static defaultProps = {
     time: new Date(Date.now()).toString().split(' ')[4].slice(0, 5),
@@ -19,34 +19,32 @@ export default class Picker extends Component{
       date: this.props.time,
       icon: <Icon name="check" size={20} color="green" style={Styles.icon}/>
     }
-    this.handleOnPress = this.handleOnPress.bind(this);
+
     this.handleOnChange = this.handleOnChange.bind(this);
     this.isValid = this.isValid.bind(this);
   }
 
-  handleOnPress(){
-    console.log(`d: ${this.state.date}`);
-    //hideDatePicker();
-  }
+
 
   isValid(value){
     const regex = new RegExp('([0-1][0-9]|2[0-3]):[0-5][0-9]');
     return regex.test(value);
   }
 
-  handleOnChange(formatted, extracted){
+  async handleOnChange(formatted, extracted){
     if(this.isValid(formatted)){
-      this.setState({
+      await this.setState({
         date: formatted,
         icon: <Icon name="check" size={20} color="green" style={Styles.icon} />
 
       });
     }
     else{
-      this.setState({
+      await this.setState({
         icon: <Icon name="close" size={20} color="red" style={Styles.icon} />
       })
     }
+    this.props.handleChange(this.state.date, this.props.period);
   }
   render(){
     return(
@@ -67,10 +65,7 @@ export default class Picker extends Component{
             style={{marginRight: 10}}
         />
         {this.state.icon}
-        <Button
-            title="OK"
-            onPress={this.handleOnPress}
-          />
+
       </View>
     );
   }

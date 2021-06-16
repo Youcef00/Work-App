@@ -6,6 +6,8 @@ import Weeks from './components/Weeks.js';
 import ModifyWeek from './components/ModifyWeek.js';
 import Picker from './components/Picker.js';
 import ModifyDay from './components/ModifyDay.js';
+import AddWeek from './components/AddWeek.js';
+import AddDay from './components/AddDay.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -174,30 +176,32 @@ export default class App extends Component{
   constructor(){
     super();
     this.state = {
-      data: [],
+      data:  [],
 
     };
 
 
 
-    this.handleDatePickerConfirm = this.handleDatePickerConfirm.bind(this);
-    this.hideDatePicker = this.hideDatePicker.bind(this);
+
     this.storeData = this.storeData.bind(this);
     this.getData = this.getData.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
+    this.addWeek = this.addWeek.bind(this);
   }
 
   componentDidMount(){
-
     this.getData();
+
   }
 
   componentDidUpdate(){
-    console.log(this.state.data[0].Lundi)
+    //console.log(this.state.data[0].Lundi)
+
   }
   async storeData(){
   try {
-    await AsyncStorage.setItem('data', JSON.stringify(DATA))
+    await AsyncStorage.setItem('data', JSON.stringify(this.state.data));
+    console.log('data stored');
   } catch (e) {
     console.log(e);
   }
@@ -206,35 +210,44 @@ export default class App extends Component{
 async getData() {
   try {
     const value = await AsyncStorage.getItem('data');
+
     this.setState({
       data: value != null ? JSON.parse(value) : [],
     });
+
   } catch(e) {
     console.log(e);
   }
+
 }
 
-  //<ModifyWeek data={DATA} />
-  handleDatePickerConfirm(date){
-    console.log(`d: ${date}`);
-    hideDatePicker();
-  }
+async addWeek(newWeek){
+  let data = this.state.data;
+  data = [...data, newWeek];
+  await this.setState({
+    data: data,
+  });
+  console.log(this.state.data);
+  this.storeData();
+}
 
-  hideDatePicker(){
-    this.setState({isVisible: false});
-  }
 
-  handleUpdate(id, day, data){
+
+  async handleUpdate(id, day, data){
     const newData = [...this.state.data];
     newData.forEach((d) => {
       if(d.id == id){
-        console.log(`found => ${d[day].matin.debut} data:  ${data.matin.debut}`);
+        //console.log(`found => ${day} data:  ${data.matin.debut}`);
         d[day] = data;
       }
     });
-    this.setState({data: newData});
+    await this.setState({data: newData});
+    this.storeData();
   }
+
+
   render(){
+
     //<ModifyWeek data={DATA}/>
     return(
       <NavigationContainer>
@@ -258,6 +271,18 @@ async getData() {
           {props => <ModifyDay {...props} handleOnPress={this.handleUpdate} />}
           </Stack.Screen>
 
+          <Stack.Screen
+            name="AddWeek"
+            options={{title: "Add Week"}}
+          >
+          {props => <AddWeek {...props} addWeek={this.addWeek} />}
+          </Stack.Screen>
+
+          <Stack.Screen
+            name="AddDay"
+            options={{title: "Add Day"}}
+            component={AddDay}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       );

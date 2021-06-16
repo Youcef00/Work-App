@@ -6,10 +6,27 @@ export default class Item extends Component {
   constructor(props){
     super(props);
     this.handleOnPress = this.handleOnPress.bind(this);
+    this.handleUpdate = this.handleUpdate.bind(this);
+    this.timeRender = this.timeRender.bind();
+  }
+
+
+  handleUpdate(){
+
   }
 
   handleOnPress(){
-    this.props.navigation.navigate('UpdateWeek', {data: this.props.data, navigation: this.props.navigation, id:this.props.data.id});
+    this.props.navigation.navigate('UpdateWeek', {data: this.props.data, navigation: this.props.navigation, id:this.props.data.id, update: this.handleUpdate});
+  }
+
+  timeRender(debut, fin){
+    return(
+
+      <Text>
+        {debut != null ? debut + ' -- ' + fin  : ''}
+        </Text>
+
+  );
   }
 
   render(){
@@ -21,13 +38,13 @@ export default class Item extends Component {
             <TableWrapper style={{flexDirection: 'row'}}>
                 <Col data={['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche', 'Heures totales', 'Paiement']} style={{flex:1}} hightArr={[28, 28]} textStyle={{textAlign: 'center'}} />
                 <Rows data={[
-                  [`${this.props.data.Lundi.matin.debut} -- ${this.props.data.Lundi.matin.fin}`,        `${this.props.data.Lundi.soir.debut} -- ${this.props.data.Lundi.soir.fin}`],
-                  [`${this.props.data.Mardi.matin.debut} -- ${this.props.data.Mardi.matin.fin}`,        `${this.props.data.Mardi.soir.debut} -- ${this.props.data.Mardi.soir.fin}`],
-                  [`${this.props.data.Mercredi.matin.debut} -- ${this.props.data.Mercredi.matin.fin}`,  `${this.props.data.Mercredi.soir.debut} -- ${this.props.data.Mercredi.soir.fin}`],
-                  [`${this.props.data.Jeudi.matin.debut} -- ${this.props.data.Jeudi.matin.fin}`,        `${this.props.data.Jeudi.soir.debut} -- ${this.props.data.Jeudi.soir.fin}`],
-                  [`${this.props.data.Vendredi.matin.debut} -- ${this.props.data.Vendredi.matin.fin}`,  `${this.props.data.Vendredi.soir.debut} -- ${this.props.data.Vendredi.soir.fin}`],
-                  [`${this.props.data.Samedi.matin.debut} -- ${this.props.data.Samedi.matin.fin}`,      `${this.props.data.Samedi.soir.debut} -- ${this.props.data.Samedi.soir.fin}`],
-                  [`${this.props.data.Dimanche.matin.debut} -- ${this.props.data.Dimanche.matin.fin}`,  `${this.props.data.Dimanche.soir.debut} -- ${this.props.data.Dimanche.soir.fin}`],
+                  [this.timeRender(this.props.data.Lundi.matin.debut, this.props.data.Lundi.matin.fin),        this.timeRender(this.props.data.Lundi.soir.debut, this.props.data.Lundi.soir.fin)],
+                  [this.timeRender(this.props.data.Mardi.matin.debut, this.props.data.Mardi.matin.fin),        this.timeRender(this.props.data.Mardi.soir.debut, this.props.data.Mardi.soir.fin)],
+                  [this.timeRender(this.props.data.Mercredi.matin.debut, this.props.data.Mercredi.matin.fin),  this.timeRender(this.props.data.Mercredi.soir.debut, this.props.data.Mercredi.soir.fin)],
+                  [this.timeRender(this.props.data.Jeudi.matin.debut, this.props.data.Jeudi.matin.fin),        this.timeRender(this.props.data.Jeudi.soir.debut, this.props.data.Jeudi.soir.fin)],
+                  [this.timeRender(this.props.data.Vendredi.matin.debut, this.props.data.Vendredi.matin.fin),  this.timeRender(this.props.data.Vendredi.soir.debut, this.props.data.Vendredi.soir.fin)],
+                  [this.timeRender(this.props.data.Samedi.matin.debut, this.props.data.Samedi.matin.fin),      this.timeRender(this.props.data.Samedi.soir.debut, this.props.data.Samedi.soir.fin)],
+                  [this.timeRender(this.props.data.Dimanche.matin.debut, this.props.data.Dimanche.matin.fin),  this.timeRender(this.props.data.Dimanche.soir.debut, this.props.data.Dimanche.soir.fin)],
                   ['20'],
                   ['150']
                 ]}

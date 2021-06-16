@@ -2,30 +2,29 @@ import React , {Component} from 'react';
 import {Text, View, TouchableOpacity, Button, StyleSheet, ScrollView} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import Picker from './Picker.js';
+import Day from './Day.js';
 
-const Day = ({time, day}) => {
-  return (
-    <View style={{margin: 20}}>
-    <Text style={{color: 'grey'}}>{day}</Text>
-      <View style={{flexDirection: 'row'}}>
-      <View style={[Styles.dayStandard, Styles.day]}><Text style={{marginRight: 10}}>Matin</Text></View>
-      <Text style={{marginRight: 10}}>{time.matin.debut} -- {time.matin.fin}</Text>
-      </View>
-
-      <View style={{flexDirection: 'row'}}>
-      <View style={[Styles.dayStandard, Styles.night]}><Text style={{marginRight: 10}}>Soir</Text></View>
-      <Text style={{marginRight: 10}}>{time.soir.debut} -- {time.soir.fin}</Text>
-      </View>
-    </View>
-  );
-}
 
 export default class ModifyWeek extends Component {
   constructor(props){
     super(props);
 
+    this.state = {
+      data: this.props.route.params.data,
+    }
+
     this.touchableDay = this.touchableDay.bind(this);
     this.handleOnPress = this.handleOnPress.bind(this);
+    this.handleWeekUpdate = this.handleWeekUpdate.bind(this);
+
+  }
+
+  handleWeekUpdate(day, newDayData){
+    let newData = this.state.data;
+    newData[day] = newDayData;
+    this.setState({
+      data: newData
+    });
   }
 
   handleOnPress(day){
@@ -33,9 +32,9 @@ export default class ModifyWeek extends Component {
   }
 
   touchableDay(day, text){
-    console.log(`data: ${day} id:${this.props.route.params.id} text: ${text}`);
+    //console.log(`data: ${day} id:${this.props.route.params.id} text: ${text}`);
     return(
-      <TouchableOpacity onPress={() => this.props.route.params.navigation.navigate("UpdateDay", {data: day, id: this.props.route.params.id, day: text})}>
+      <TouchableOpacity onPress={() => this.props.route.params.navigation.navigate("UpdateDay", {data: day, id: this.props.route.params.id, day: text, navigation: this.props.route.params.navigation, handleUpdate: this.handleWeekUpdate})}>
         <Day time={day}  day={text}/>
       </TouchableOpacity>
     );
@@ -46,13 +45,13 @@ export default class ModifyWeek extends Component {
         <View style={{flex:1, paddingVertical: 20}}>
             <Text> Update Week </Text>
             <ScrollView >
-              {this.touchableDay(this.props.route.params.data.Lundi, "Lundi")}
-              {this.touchableDay(this.props.route.params.data.Mardi, "Mardi")}
-              {this.touchableDay(this.props.route.params.data.Mercredi, "Mercredi")}
-              {this.touchableDay(this.props.route.params.data.Jeudi, "Jeudi")}
-              {this.touchableDay(this.props.route.params.data.Vendredi, "Vendredi")}
-              {this.touchableDay(this.props.route.params.data.Samedi, "Samedi")}
-              {this.touchableDay(this.props.route.params.data.Dimanche, "Dimanche")}
+              {this.touchableDay(this.state.data.Lundi, "Lundi")}
+              {this.touchableDay(this.state.data.Mardi, "Mardi")}
+              {this.touchableDay(this.state.data.Mercredi, "Mercredi")}
+              {this.touchableDay(this.state.data.Jeudi, "Jeudi")}
+              {this.touchableDay(this.state.data.Vendredi, "Vendredi")}
+              {this.touchableDay(this.state.data.Samedi, "Samedi")}
+              {this.touchableDay(this.state.data.Dimanche, "Dimanche")}
             </ScrollView>
 
         </View>
