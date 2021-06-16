@@ -8,12 +8,13 @@ export default class Weeks extends Component {
   constructor(props){
     super(props);
     this.renderItem = this.renderItem.bind(this);
+    this.scrollView = null;
   }
   renderItem( {item} ){
 
     return (
 
-    <Item navigation={this.props.navigation} title={item.title} data={item}/>
+    <Item navigation={this.props.navigation} title={item.title} data={item} handleDeleteWeek={this.props.handleDeleteWeek}/>
 
   );
 }
@@ -28,7 +29,8 @@ export default class Weeks extends Component {
             renderItem= {this.renderItem}
             keyExtractor= {item => item.id}
             horizontal= {true}
-
+            ref={ref => {this.scrollView = ref}}
+            onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
           />
       </SafeAreaView>
     );

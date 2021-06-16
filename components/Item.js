@@ -1,22 +1,22 @@
 import React , {Component} from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 export default class Item extends Component {
 
   constructor(props){
     super(props);
     this.handleOnPress = this.handleOnPress.bind(this);
-    this.handleUpdate = this.handleUpdate.bind(this);
+
     this.timeRender = this.timeRender.bind();
-  }
-
-
-  handleUpdate(){
+    this.handleLongPress = this.handleLongPress.bind(this);
 
   }
+
+
+
 
   handleOnPress(){
-    this.props.navigation.navigate('UpdateWeek', {data: this.props.data, navigation: this.props.navigation, id:this.props.data.id, update: this.handleUpdate});
+    this.props.navigation.navigate('UpdateWeek', {data: this.props.data, navigation: this.props.navigation, id:this.props.data.id});
   }
 
   timeRender(debut, fin){
@@ -29,9 +29,27 @@ export default class Item extends Component {
   );
   }
 
+  handleLongPress(){
+    Alert.alert(
+      "Supprimer la semaine",
+      "Voulez vous supprimer cette semaine ?",
+      [
+        {
+          text: "Annuler",
+          onPress: () => console.log("annuler"),
+          style: "cancel"
+        },
+        {
+          text: "Supprimer",
+          onPress: () => this.props.handleDeleteWeek(this.props.data.id),
+        }
+      ]
+    );
+  }
+
   render(){
     return(
-      <TouchableOpacity onPress={this.handleOnPress} style={[styles.item, {height: 500, width: 350, marginTop: 55, flex: 1}]}>
+      <TouchableOpacity onLongPress={this.handleLongPress} onPress={this.handleOnPress} style={[styles.item, {height: 500, width: 350, marginTop: 55, flex: 1}]}>
         <Text style={styles.title}>{this.props.title}</Text>
         <Table borderStyle={{borderWidth: 2, borderColor: 'black', flex: 1}} >
             <Row data={['', 'Matin', 'Soir']} />

@@ -187,6 +187,7 @@ export default class App extends Component{
     this.getData = this.getData.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
     this.addWeek = this.addWeek.bind(this);
+    this.handleDeleteWeek = this.handleDeleteWeek.bind(this);
   }
 
   componentDidMount(){
@@ -227,7 +228,7 @@ async addWeek(newWeek){
   await this.setState({
     data: data,
   });
-  console.log(this.state.data);
+  //console.log(this.state.data);
   this.storeData();
 }
 
@@ -245,7 +246,14 @@ async addWeek(newWeek){
     this.storeData();
   }
 
-
+async handleDeleteWeek(weekId){
+  let newData = this.state.data.filter((week) => week.id != weekId);
+  await this.setState({
+    data: newData,
+  });
+  this.storeData();
+  console.log(`delete week handler data: ${this.state.data}`);
+}
   render(){
 
     //<ModifyWeek data={DATA}/>
@@ -254,7 +262,7 @@ async addWeek(newWeek){
         <Stack.Navigator>
           <Stack.Screen name="Home" options={{title: "Welcome Home"}}>
 
-            {props => <Home {...props} data={this.state.data} /> }
+            {props => <Home {...props} data={this.state.data} handleDeleteWeek={this.handleDeleteWeek} /> }
 
           </Stack.Screen>
 

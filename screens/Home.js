@@ -29,7 +29,7 @@ export default class Home extends Component  {
       <View style={{flex: 1}}>
       <Text> Home </Text>
       <Button onPress={this.handleOnPress} title="Add" />
-      <Weeks navigation={this.props.navigation} DATA={this.props.data}/>
+      <Weeks navigation={this.props.navigation} DATA={this.props.data} handleDeleteWeek={this.props.handleDeleteWeek}/>
 
       </View>
     );
