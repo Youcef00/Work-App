@@ -17,7 +17,7 @@ export default class Picker extends Component{
     super(props);
     this.state= {
       date: this.props.time,
-      icon: <Icon name="check" size={20} color="green" style={Styles.icon}/>
+      icon: <Icon name="check" size={iconSize} color="green" style={Styles.icon}/>
     }
 
     this.handleOnChange = this.handleOnChange.bind(this);
@@ -35,13 +35,13 @@ export default class Picker extends Component{
     if(this.isValid(formatted)){
       await this.setState({
         date: formatted,
-        icon: <Icon name="check" size={20} color="green" style={Styles.icon} />
+        icon: <Icon name="check" size={iconSize} color="green" style={Styles.icon} />
 
       });
     }
     else{
       await this.setState({
-        icon: <Icon name="close" size={20} color="red" style={Styles.icon} />
+        icon: <Icon name="close" size={iconSize+8} color="red" style={Styles.icon} />
       })
     }
     this.props.handleChange(this.state.date, this.props.period);
@@ -49,7 +49,7 @@ export default class Picker extends Component{
   render(){
     return(
 
-      <View style={{width: 100, borderStyle: 'solid', borderColor: 'black', borderWidth: 1, flexDirection: 'row'}}>
+      <View style={Styles.pickerContainer}>
         <TextInputMask
             type={'custom'}
             options={{
@@ -62,7 +62,7 @@ export default class Picker extends Component{
             value={this.state.date}
 
             onChangeText={this.handleOnChange}
-            style={{marginRight: 10}}
+            style={{marginRight: 10, fontSize: 30, color: 'white', width: 100}}
         />
         {this.state.icon}
 
@@ -71,9 +71,14 @@ export default class Picker extends Component{
   }
 
 }
-
+const iconSize = 30;
 const Styles = StyleSheet.create({
   icon: {
-    marginTop: 13
+    margin: 4
+  },
+  pickerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });

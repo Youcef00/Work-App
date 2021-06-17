@@ -43,7 +43,6 @@ export default class ModifyWeek extends Component {
 
     return(
         <View style={{flex:1, paddingVertical: 20}}>
-            <Text> Update Week </Text>
             <ScrollView >
               {this.touchableDay(this.state.data.Lundi, "Lundi")}
               {this.touchableDay(this.state.data.Mardi, "Mardi")}

@@ -8,6 +8,7 @@ import Picker from './components/Picker.js';
 import ModifyDay from './components/ModifyDay.js';
 import AddWeek from './components/AddWeek.js';
 import AddDay from './components/AddDay.js';
+import SplashScreen from './components/SplashScreen.js';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -260,7 +261,13 @@ async handleDeleteWeek(weekId){
     return(
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Home" options={{title: "Welcome Home"}}>
+          <Stack.Screen
+            name="SplashScreen"
+            component={SplashScreen}
+            options={{headerShown: false}}
+            />
+
+          <Stack.Screen name="Home" options={{title: "Welcome Home", headerLeft: () => null}}>
 
             {props => <Home {...props} data={this.state.data} handleDeleteWeek={this.handleDeleteWeek} /> }
 
@@ -268,13 +275,13 @@ async handleDeleteWeek(weekId){
 
           <Stack.Screen
             name="UpdateWeek"
-            options={{title: "Update Week"}}
+            options={{title: "Modifier La Semaine"}}
             component={ModifyWeek}
           />
 
           <Stack.Screen
             name="UpdateDay"
-            options={{title: "Update Day"}}
+            options={{title: "Modifier Le Jour"}}
           >
           {props => <ModifyDay {...props} handleOnPress={this.handleUpdate} />}
           </Stack.Screen>
