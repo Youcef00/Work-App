@@ -1,8 +1,10 @@
 import React , {Component} from 'react';
-import {Text, View, Button, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, Button, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Picker from './Picker.js';
 import IconMoon from 'react-native-vector-icons/FontAwesome';
 import IconSun from 'react-native-vector-icons/Fontisto';
+import SvgUri from 'react-native-svg-uri';
+import barbecueSvg from '../assets/images/barbecue.svg';
 export default class ModifyDay extends Component{
 
   constructor(props){
@@ -34,11 +36,15 @@ handlePickerChange(time, period){
 
   render(){
     return(
-      <View style={{flex:1}}>
+      <View style={{flex:1, backgroundColor: '#9896a4'}}>
         <View style={{height: 150}}>
+
         </View>
         <View style={Styles.dayTimesContainer}>
-
+        <Image
+          source={require('../assets/images/barbecue.png')}
+          style={{position: 'absolute', top: -130, left: 170}}
+        />
 
           <View style={Styles.dayTime}>
             <View style={Styles.iconContainer}>
@@ -50,7 +56,7 @@ handlePickerChange(time, period){
                 <Text style={Styles.pickerContainerText}>From</Text>
                 <Picker time={this.props.route.params.data.matin.debut} handleChange={this.handlePickerChange} period="matinDebut"/>
               </View>
-              <View style={Styles.pickerContainer}>
+              <View style={[Styles.pickerContainer, {paddingLeft: 25}]}>
                 <Text style={Styles.pickerContainerText}>To</Text>
                 <Picker time={this.props.route.params.data.matin.fin} handleChange={this.handlePickerChange} period="matinFin"/>
               </View>
@@ -67,7 +73,7 @@ handlePickerChange(time, period){
                 <Text style={Styles.pickerContainerText}>From</Text>
                 <Picker time={this.props.route.params.data.soir.debut} handleChange={this.handlePickerChange} period="soirDebut"/>
               </View>
-              <View style={Styles.pickerContainer}>
+              <View style={[Styles.pickerContainer, {paddingLeft: 25}]}>
                 <Text style={Styles.pickerContainerText}>To</Text>
                 <Picker time={this.props.route.params.data.soir.fin} handleChange={this.handlePickerChange} period="soirFin"/>
               </View>
@@ -87,10 +93,13 @@ handlePickerChange(time, period){
 const Styles = StyleSheet.create({
   dayTimesContainer: {
     flex: 1,
-    backgroundColor: 'purple',
+    backgroundColor: '#3f3c53',
     borderTopRightRadius: 65,
     borderTopLeftRadius: 65,
-    padding: 30
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingLeft: 25,
+    paddingRight: 35,
   },
   dayTime:{
     marginBottom: 20,

@@ -31,6 +31,8 @@ export default class Weeks extends Component {
             horizontal= {true}
             ref={ref => {this.scrollView = ref}}
             onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}
+            snapToInterval={380}
+            
           />
       </SafeAreaView>
     );

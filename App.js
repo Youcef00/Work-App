@@ -281,7 +281,14 @@ async handleDeleteWeek(weekId){
 
           <Stack.Screen
             name="UpdateDay"
-            options={{title: "Modifier Le Jour"}}
+            options={{
+              title: "Modifier Le Jour",
+              headerStyle: {
+                backgroundColor: '#9896a4',
+
+              },
+              headerTintColor: '#fff',
+          }}
           >
           {props => <ModifyDay {...props} handleOnPress={this.handleUpdate} />}
           </Stack.Screen>

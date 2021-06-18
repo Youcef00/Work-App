@@ -14,6 +14,8 @@ target 'Work' do
 
   pod 'react-native-sqlite-storage', :path => '../node_modules/react-native-sqlite-storage'
 
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'WorkTests' do
     inherit! :complete
     # Pods for testing
