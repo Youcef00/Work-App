@@ -1,15 +1,21 @@
 import React , {Component} from 'react';
 import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar, Image, TouchableOpacity, Alert } from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
+
+const PAY_BY_HOUR = 7.5;
+
 export default class Item extends Component {
 
   constructor(props){
     super(props);
+
+
     this.handleOnPress = this.handleOnPress.bind(this);
 
     this.timeRender = this.timeRender.bind();
     this.handleLongPress = this.handleLongPress.bind(this);
-
+    this.calculateDayHours = this.calculateDayHours.bind(this);
+    this.calculateTotalHours = this.calculateTotalHours.bind(this);
   }
 
 
@@ -47,7 +53,66 @@ export default class Item extends Component {
     );
   }
 
+
+
+  calculateDayHours(day){
+    const today = new Date(day.date);
+
+    const todayCopy = new Date(today);
+    const nextDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()+1);
+
+    let total = 0;
+
+    if (day.matin.debut > day.matin.fin && (day.matin.debut !== '' && day.matin.fin !== '')){
+          today.setHours(day.matin.debut.split(':')[0]);
+          today.setMinutes(day.matin.debut.split(':')[1]);
+          nextDay.setHours(day.matin.fin.split(':')[0]);
+          nextDay.setMinutes(day.matin.fin.split(':')[1]);
+
+          total += ((nextDay - today)/3600000) ;
+
+    }
+    else if((day.matin.debut !== '' && day.matin.fin !== '')) {
+      today.setHours(day.matin.debut.split(':')[0]);
+      today.setMinutes(day.matin.debut.split(':')[1]);
+      todayCopy.setHours(day.matin.fin.split(':')[0]);
+      todayCopy.setMinutes(day.matin.fin.split(':')[1]);
+      total += ((todayCopy - today)/3600000) ;
+
+    }
+
+    if (day.soir.debut > day.soir.fin && (day.soir.debut !== '' && day.soir.fin !== '')){
+          today.setHours(day.soir.debut.split(':')[0]);
+          today.setMinutes(day.soir.debut.split(':')[1]);
+          nextDay.setHours(day.soir.fin.split(':')[0]);
+          nextDay.setMinutes(day.soir.fin.split(':')[1]);
+          total += ((nextDay - today)/3600000) ;
+    }
+    else if ((day.soir.debut !== '' && day.soir.fin !== '')){
+      today.setHours(day.soir.debut.split(':')[0]);
+      today.setMinutes(day.soir.debut.split(':')[1]);
+      todayCopy.setHours(day.soir.fin.split(':')[0]);
+      todayCopy.setMinutes(day.soir.fin.split(':')[1]);
+      total += ((todayCopy - today)/3600000) ;
+    }
+
+    return total;
+  }
+
+  calculateTotalHours(){
+
+      return( this.calculateDayHours(this.props.data.Lundi)
+            +this.calculateDayHours(this.props.data.Mardi)
+            +this.calculateDayHours(this.props.data.Mercredi)
+            +this.calculateDayHours(this.props.data.Jeudi)
+            +this.calculateDayHours(this.props.data.Vendredi)
+            +this.calculateDayHours(this.props.data.Samedi)
+            +this.calculateDayHours(this.props.data.Dimanche));
+
+  }
+
   render(){
+    const totalHours = this.calculateTotalHours();
     return(
       <TouchableOpacity onLongPress={this.handleLongPress} onPress={this.handleOnPress} style={[styles.item, {height: 500, width: 350, marginTop: 55, flex: 1}]}>
         <Text style={styles.title}>{this.props.title}</Text>
@@ -63,8 +128,8 @@ export default class Item extends Component {
                   [this.timeRender(this.props.data.Vendredi.matin.debut, this.props.data.Vendredi.matin.fin),  this.timeRender(this.props.data.Vendredi.soir.debut, this.props.data.Vendredi.soir.fin)],
                   [this.timeRender(this.props.data.Samedi.matin.debut, this.props.data.Samedi.matin.fin),      this.timeRender(this.props.data.Samedi.soir.debut, this.props.data.Samedi.soir.fin)],
                   [this.timeRender(this.props.data.Dimanche.matin.debut, this.props.data.Dimanche.matin.fin),  this.timeRender(this.props.data.Dimanche.soir.debut, this.props.data.Dimanche.soir.fin)],
-                  ['20'],
-                  ['150']
+                  [<Text>{totalHours}</Text>],
+                  [<Text>{totalHours*PAY_BY_HOUR}</Text>]
                 ]}
         flexArr= {[1, 1]}
         />

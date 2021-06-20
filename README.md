@@ -13,6 +13,6 @@ commands to run:
 
 # Libraries to remove:
 
-#Fonctionalités a rajouter:
+# Fonctionalités a rajouter:
 * filtre pour les semaines
 * calcul des heures et somme

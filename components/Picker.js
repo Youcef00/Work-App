@@ -27,8 +27,8 @@ export default class Picker extends Component{
 
 
   isValid(value){
-    const regex = new RegExp('([0-1][0-9]|2[0-3]):[0-5][0-9]');
-    return regex.test(value);
+    const regex = new RegExp('(([0-1][0-9]|2[0-3]):[0-5][0-9])');
+    return regex.test(value) || value === '';
   }
 
   async handleOnChange(formatted, extracted){
@@ -55,8 +55,8 @@ export default class Picker extends Component{
             options={{
               mask: '99:99',
               validator: function(value, settings){
-                const regex = new RegExp('([0-1][0-9]|2[0-3]):[0-5][0-9]');
-                return regex.test(value);
+                const regex = new RegExp('(([0-1][0-9]|2[0-3]):[0-5][0-9])');
+                return regex.test(value) || value === '';
               }
             }}
             value={this.state.date}
