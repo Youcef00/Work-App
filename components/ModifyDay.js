@@ -5,6 +5,7 @@ import IconMoon from 'react-native-vector-icons/FontAwesome';
 import IconSun from 'react-native-vector-icons/Fontisto';
 import SvgUri from 'react-native-svg-uri';
 import barbecueSvg from '../assets/images/barbecue.svg';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 export default class ModifyDay extends Component{
 
   constructor(props){
@@ -36,6 +37,7 @@ handlePickerChange(time, period){
 
   render(){
     return(
+      <KeyboardAwareScrollView>
       <View style={{flex:1, backgroundColor: '#9896a4'}}>
         <View style={{height: 150}}>
 
@@ -86,7 +88,7 @@ handlePickerChange(time, period){
           </TouchableOpacity>
         </View>
       </View>
-
+      </KeyboardAwareScrollView>
     );
   }
 }

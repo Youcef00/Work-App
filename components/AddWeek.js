@@ -39,7 +39,7 @@ componentDidMount(){
   else{
     newWeek.id = 1;
   }
-  newWeek.title = 'Week '+newWeek.id;
+  newWeek.title = 'Semaine '+newWeek.id;
   this.setState({
     week: newWeek,
   }
@@ -86,6 +86,8 @@ componentDidMount(){
       const today = new Date(formatted.split('/')[2], parseInt(formatted.split('/')[1])-1, formatted.split('/')[0]);
       this.setState((prevState) => ({
         week: {
+          id: prevState.week.id,
+          title: prevState.week.title,
           Lundi:{matin:{debut: prevState.week.Lundi.matin.debut, fin:prevState.week.Lundi.matin.fin }, soir: {debut:prevState.week.Lundi.soir.debut, fin: prevState.week.Lundi.soir.fin}, date: new Date(today.getFullYear(), today.getMonth(), today.getDate()-today.getDay()+1)},
           Mardi:{matin:{debut: prevState.week.Mardi.matin.debut, fin:prevState.week.Mardi.matin.fin }, soir: {debut:prevState.week.Mardi.soir.debut, fin: prevState.week.Mardi.soir.fin},  date: new Date(today.getFullYear(), today.getMonth(), today.getDate()-today.getDay()+2)},
           Mercredi:{matin:{debut: prevState.week.Mercredi.matin.debut, fin:prevState.week.Mercredi.matin.fin }, soir: {debut:prevState.week.Mercredi.soir.debut, fin: prevState.week.Mercredi.soir.fin},  date: new Date(today.getFullYear(), today.getMonth(), today.getDate()-today.getDay()+3)},

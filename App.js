@@ -229,7 +229,7 @@ async addWeek(newWeek){
   await this.setState({
     data: data,
   });
-  //console.log(this.state.data);
+  console.log(newWeek.id);
   this.storeData();
 }
 
@@ -267,7 +267,7 @@ async handleDeleteWeek(weekId){
             options={{headerShown: false}}
             />
 
-          <Stack.Screen name="Home" options={{title: "Welcome Home", headerLeft: () => null}}>
+          <Stack.Screen name="Home" options={{headerShown: false}}>
 
             {props => <Home {...props} data={this.state.data} handleDeleteWeek={this.handleDeleteWeek} /> }
 

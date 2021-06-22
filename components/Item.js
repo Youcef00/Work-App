@@ -28,7 +28,7 @@ export default class Item extends Component {
   timeRender(debut, fin){
     return(
 
-      <Text>
+      <Text style={styles.time}>
         {debut != null ? debut + ' -- ' + fin  : ''}
         </Text>
 
@@ -47,7 +47,7 @@ export default class Item extends Component {
         },
         {
           text: "Supprimer",
-          onPress: () => this.props.handleDeleteWeek(this.props.data.id),
+          onPress: () => {this.props.handleDeleteWeek(this.props.data.id); this.props.handleWeeksUpdate(); }
         }
       ]
     );
@@ -112,14 +112,16 @@ export default class Item extends Component {
   }
 
   render(){
-    const totalHours = this.calculateTotalHours();
+    const totalHours = this.calculateTotalHours().toFixed(2);
+
     return(
-      <TouchableOpacity onLongPress={this.handleLongPress} onPress={this.handleOnPress} style={[styles.item, {height: 500, width: 350, marginTop: 55, flex: 1}]}>
+      <TouchableOpacity onLongPress={this.handleLongPress} onPress={this.handleOnPress} style={styles.item}>
         <Text style={styles.title}>{this.props.title}</Text>
-        <Table borderStyle={{borderWidth: 2, borderColor: 'black', flex: 1}} >
-            <Row data={['', 'Matin', 'Soir']} />
+
+        <Table borderStyle={{flex: 1}} >
+            <Row data={['Jours',  'Matin', 'Soir']} style={{borderBottomWidth: 2, borderBottomColor: 'black'}} textStyle={{color: 'white', fontWeight: 'bold'}}/>
             <TableWrapper style={{flexDirection: 'row'}}>
-                <Col data={['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche', 'Heures totales', 'Paiement']} style={{flex:1}} hightArr={[28, 28]} textStyle={{textAlign: 'center'}} />
+                <Col data={['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche', 'Heures', 'Paiement']} style={{flex:1,}} textStyle={{textAlign: 'left', fontSize: 16, fontWeight: 'bold', color: 'white', borderBottomWidth: 1, borderBottomColor: 'black', paddingBottom: 4, paddingRight: 4}} />
                 <Rows data={[
                   [this.timeRender(this.props.data.Lundi.matin.debut, this.props.data.Lundi.matin.fin),        this.timeRender(this.props.data.Lundi.soir.debut, this.props.data.Lundi.soir.fin)],
                   [this.timeRender(this.props.data.Mardi.matin.debut, this.props.data.Mardi.matin.fin),        this.timeRender(this.props.data.Mardi.soir.debut, this.props.data.Mardi.soir.fin)],
@@ -128,10 +130,10 @@ export default class Item extends Component {
                   [this.timeRender(this.props.data.Vendredi.matin.debut, this.props.data.Vendredi.matin.fin),  this.timeRender(this.props.data.Vendredi.soir.debut, this.props.data.Vendredi.soir.fin)],
                   [this.timeRender(this.props.data.Samedi.matin.debut, this.props.data.Samedi.matin.fin),      this.timeRender(this.props.data.Samedi.soir.debut, this.props.data.Samedi.soir.fin)],
                   [this.timeRender(this.props.data.Dimanche.matin.debut, this.props.data.Dimanche.matin.fin),  this.timeRender(this.props.data.Dimanche.soir.debut, this.props.data.Dimanche.soir.fin)],
-                  [<Text>{totalHours}</Text>],
-                  [<Text>{totalHours*PAY_BY_HOUR}</Text>]
+                  [<Text style={styles.time}>{totalHours}</Text>],
+                  [<Text style={styles.time}>{(totalHours*PAY_BY_HOUR).toFixed(2)} €</Text>]
                 ]}
-        flexArr= {[1, 1]}
+        flexArr= {[1, 1]} style={{height: 27, borderBottomWidth: 1, borderBottomColor: 'black'}}
         />
             </TableWrapper>
         </Table>
@@ -142,17 +144,20 @@ export default class Item extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-  },
+
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: '#a0752c',
     padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    borderRadius: 15,
+    margin: 15,
+    height: 350,
   },
   title: {
     fontSize: 32,
+    color: 'white'
+  },
+  time:{
+    color: 'white',
+    fontWeight: 'bold'
   },
 });
