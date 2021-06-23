@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, Button, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, TouchableOpacity, Button, StyleSheet, ScrollView, Image} from 'react-native';
 import Day from './Day.js';
 import { TextInputMask } from 'react-native-masked-text';
 
@@ -68,7 +68,7 @@ componentDidMount(){
   touchableDay(day, text){
 
     return(
-      <TouchableOpacity onPress={() => this.props.route.params.navigation.navigate("AddDay", {data: day, id: this.state.week.id, day: text, navigation: this.props.route.params.navigation, handleUpdate: this.handleDayUpdate})}>
+      <TouchableOpacity style={Styles.touchableDay} onPress={() => this.props.route.params.navigation.navigate("AddDay", {data: day, id: this.state.week.id, day: text, navigation: this.props.route.params.navigation, handleUpdate: this.handleDayUpdate})}>
         <Day time={day}  day={text}/>
       </TouchableOpacity>
     );
@@ -98,7 +98,7 @@ componentDidMount(){
         }
       })
       );
-      console.log('handle change state: '+ new Date(today.getFullYear(), today.getMonth(), today.getDate()-today.getDay()+1));
+      //console.log('handle change state: '+ new Date(today.getFullYear(), today.getMonth(), today.getDate()-today.getDay()+1));
     }
   }
 
@@ -113,30 +113,50 @@ componentDidMount(){
   render(){
 
     return(
-        <View style={{flex:1, paddingVertical: 20}}>
-            <Text> Add Week </Text>
-            <TextInputMask
-                type={'custom'}
-                options={{
-                  mask: '99/99/9999',
+        <View style={{flex:1, paddingTop: 20, backgroundColor: '#9896a4'}}>
+            <View style={{backgroundColor: '#3f3c53'}}>
+              <View style={{backgroundColor: '#9896a4', borderBottomRightRadius: 65}}>
+                <Image
+                  source={require('../assets/images/calendarTr.png')}
+                  style={{marginLeft: 25}}
+                />
+              </View>
 
-                }}
-                value={`${this.stringFormat(this.state.week.Lundi.date.getDate())}/${this.stringFormat(this.state.week.Lundi.date.getMonth()+1)}/${this.stringFormat(this.state.week.Lundi.date.getFullYear())}`}
+            </View>
 
-                onChangeText={this.handleOnChange}
+            <View style={{flex:1}}>
 
-            />
-            <ScrollView >
-              {this.touchableDay(this.state.week.Lundi, "Lundi")}
-              {this.touchableDay(this.state.week.Mardi, "Mardi")}
-              {this.touchableDay(this.state.week.Mercredi, "Mercredi")}
-              {this.touchableDay(this.state.week.Jeudi, "Jeudi")}
-              {this.touchableDay(this.state.week.Vendredi, "Vendredi")}
-              {this.touchableDay(this.state.week.Samedi, "Samedi")}
-              {this.touchableDay(this.state.week.Dimanche, "Dimanche")}
-            </ScrollView>
-            <Button title="Confirm" onPress={this.handleOnPress} />
+              < View style={Styles.days}>
+                <ScrollView showsVerticalScrollIndicator ={false} style={{marginBottom: 0}}>
+                <View style= {[Styles.touchableDay, {padding: 20}]}>
+                  <Text style={{color: 'white', fontSize: 16,}}>Date debut de semaine: </Text>
+                  <TextInputMask
+                      type={'custom'}
+                      options={{
+                        mask: '99/99/9999',
 
+                      }}
+                      value={`${this.stringFormat(this.state.week.Lundi.date.getDate())}/${this.stringFormat(this.state.week.Lundi.date.getMonth()+1)}/${this.stringFormat(this.state.week.Lundi.date.getFullYear())}`}
+                      style={{borderWidth: 1, borderColor: 'grey', borderRadius: 25, paddingTop: 3, paddingBottom: 3, paddingLeft: 15, marginTop: 8}}
+                      onChangeText={this.handleOnChange}
+                      placeholder='JJ/MM/AAAA'
+                  />
+                </View>
+                  {this.touchableDay(this.state.week.Lundi, "Lundi")}
+                  {this.touchableDay(this.state.week.Mardi, "Mardi")}
+                  {this.touchableDay(this.state.week.Mercredi, "Mercredi")}
+                  {this.touchableDay(this.state.week.Jeudi, "Jeudi")}
+                  {this.touchableDay(this.state.week.Vendredi, "Vendredi")}
+                  {this.touchableDay(this.state.week.Samedi, "Samedi")}
+                  {this.touchableDay(this.state.week.Dimanche, "Dimanche")}
+                </ScrollView>
+              </View>
+              <View style={{flex: .001}}>
+                <TouchableOpacity style={Styles.button} onPress={this.handleOnPress} >
+                  <Text style={{color: 'white', fontSize: 25, marginRight: 'auto'}}>Confirm</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
         </View>
     );
   }
@@ -154,5 +174,43 @@ const Styles = StyleSheet.create(
     night: {
       borderRightColor: 'purple',
     },
+    days: {
+      backgroundColor: '#3f3c53',
+      borderTopLeftRadius: 65,
+      padding: 30,
+      flex: 1,
+      paddingBottom: 60
+    },
+    touchableDay: {
+      backgroundColor: '#9896a4',
+      marginBottom: 20,
+      borderRadius: 25,
+      shadowColor: "#000",
+
+      shadowOffset: {
+      	width: 0,
+      	height: 5,
+        },
+      shadowOpacity: 0.34,
+      shadowRadius: 6.27,
+      elevation: 10,
+
+    },
+    button:{
+
+      backgroundColor: 'black',
+      width: 300,
+      borderRadius: 20,
+      height: 60,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      padding: 10,
+      alignItems: 'center',
+      flexDirection: 'row',
+      paddingLeft: 30,
+      paddingRight: 30,
+      marginTop: 'auto',
+      marginBottom: 20
+    }
   }
 );

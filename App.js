@@ -275,7 +275,13 @@ async handleDeleteWeek(weekId){
 
           <Stack.Screen
             name="UpdateWeek"
-            options={{title: "Modifier La Semaine"}}
+            options={{
+              title: "Modifier La Semaine",
+              headerStyle: {
+                backgroundColor: '#9896a4',
+              },
+              headerTintColor: '#fff',
+            }}
             component={ModifyWeek}
           />
 
@@ -295,7 +301,15 @@ async handleDeleteWeek(weekId){
 
           <Stack.Screen
             name="AddWeek"
-            options={{title: "Add Week"}}
+            options={{
+              title: "Add Week",
+              headerStyle: {
+                backgroundColor: '#9896a4',
+
+              },
+              headerTintColor: '#fff',
+
+            }}
           >
           {props => <AddWeek {...props} addWeek={this.addWeek} />}
           </Stack.Screen>

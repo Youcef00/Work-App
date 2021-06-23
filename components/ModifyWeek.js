@@ -1,5 +1,5 @@
 import React , {Component} from 'react';
-import {Text, View, TouchableOpacity, Button, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, TouchableOpacity, Button, StyleSheet, ScrollView, Image} from 'react-native';
 import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 import Picker from './Picker.js';
 import Day from './Day.js';
@@ -34,7 +34,7 @@ export default class ModifyWeek extends Component {
   touchableDay(day, text){
     //console.log(`data: ${day} id:${this.props.route.params.id} text: ${text}`);
     return(
-      <TouchableOpacity onPress={() => this.props.route.params.navigation.navigate("UpdateDay", {data: day, id: this.props.route.params.id, day: text, navigation: this.props.route.params.navigation, handleUpdate: this.handleWeekUpdate})}>
+      <TouchableOpacity style={Styles.touchableDay} onPress={() => this.props.route.params.navigation.navigate("UpdateDay", {data: day, id: this.props.route.params.id, day: text, navigation: this.props.route.params.navigation, handleUpdate: this.handleWeekUpdate})}>
         <Day time={day}  day={text}/>
       </TouchableOpacity>
     );
@@ -42,17 +42,28 @@ export default class ModifyWeek extends Component {
   render(){
 
     return(
-        <View style={{flex:1, paddingVertical: 20}}>
-            <ScrollView >
-              {this.touchableDay(this.state.data.Lundi, "Lundi")}
-              {this.touchableDay(this.state.data.Mardi, "Mardi")}
-              {this.touchableDay(this.state.data.Mercredi, "Mercredi")}
-              {this.touchableDay(this.state.data.Jeudi, "Jeudi")}
-              {this.touchableDay(this.state.data.Vendredi, "Vendredi")}
-              {this.touchableDay(this.state.data.Samedi, "Samedi")}
-              {this.touchableDay(this.state.data.Dimanche, "Dimanche")}
-            </ScrollView>
+        <View style={{flex:1, paddingVertical: 20, backgroundColor: '#9896a4'}}>
+            <View style={{backgroundColor: '#3f3c53'}}>
+              <View style={{backgroundColor: '#9896a4', borderBottomRightRadius: 65}}>
+                <Image
+                  source={require('../assets/images/calendarTr.png')}
+                  style={{marginLeft: 25}}
+                />
+              </View>
 
+            </View>
+
+            <View style={Styles.days}>
+              <ScrollView showsVerticalScrollIndicator ={false} style={{marginBottom: 100}}>
+                {this.touchableDay(this.state.data.Lundi, "Lundi")}
+                {this.touchableDay(this.state.data.Mardi, "Mardi")}
+                {this.touchableDay(this.state.data.Mercredi, "Mercredi")}
+                {this.touchableDay(this.state.data.Jeudi, "Jeudi")}
+                {this.touchableDay(this.state.data.Vendredi, "Vendredi")}
+                {this.touchableDay(this.state.data.Samedi, "Samedi")}
+                {this.touchableDay(this.state.data.Dimanche, "Dimanche")}
+              </ScrollView>
+            </View>
         </View>
     );
   }
@@ -69,6 +80,24 @@ const Styles = StyleSheet.create(
     },
     night: {
       borderRightColor: 'purple',
+    },
+    days: {
+      backgroundColor: '#3f3c53',
+      borderTopLeftRadius: 65,
+      padding: 30,
+  },
+  touchableDay: {
+    backgroundColor: '#9896a4',
+    marginBottom: 20,
+    borderRadius: 25,
+    shadowColor: "#000",
+    shadowOffset: {
+    	width: 0,
+    	height: 5,
+      },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    elevation: 10,
     },
   }
 );
