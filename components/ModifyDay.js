@@ -4,7 +4,7 @@ import Picker from './Picker.js';
 import IconMoon from 'react-native-vector-icons/FontAwesome';
 import IconSun from 'react-native-vector-icons/Fontisto';
 import SvgUri from 'react-native-svg-uri';
-import barbecueSvg from '../assets/images/barbecue.svg';
+
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 export default class ModifyDay extends Component{
 
@@ -45,7 +45,7 @@ handlePickerChange(time, period){
         <View style={Styles.dayTimesContainer}>
         <Image
           source={require('../assets/images/barbecue.png')}
-          style={{position: 'absolute', top: -130, left: 170}}
+          style={{position: 'absolute', top: -130, left: 150}}
         />
 
           <View style={Styles.dayTime}>
@@ -58,7 +58,7 @@ handlePickerChange(time, period){
                 <Text style={Styles.pickerContainerText}>From</Text>
                 <Picker time={this.props.route.params.data.matin.debut} handleChange={this.handlePickerChange} period="matinDebut"/>
               </View>
-              <View style={[Styles.pickerContainer, {paddingLeft: 25}]}>
+              <View style={[Styles.pickerContainer, {paddingLeft: 30}]}>
                 <Text style={Styles.pickerContainerText}>To</Text>
                 <Picker time={this.props.route.params.data.matin.fin} handleChange={this.handlePickerChange} period="matinFin"/>
               </View>
@@ -75,7 +75,7 @@ handlePickerChange(time, period){
                 <Text style={Styles.pickerContainerText}>From</Text>
                 <Picker time={this.props.route.params.data.soir.debut} handleChange={this.handlePickerChange} period="soirDebut"/>
               </View>
-              <View style={[Styles.pickerContainer, {paddingLeft: 25}]}>
+              <View style={[Styles.pickerContainer, {paddingLeft: 30}]}>
                 <Text style={Styles.pickerContainerText}>To</Text>
                 <Picker time={this.props.route.params.data.soir.fin} handleChange={this.handlePickerChange} period="soirFin"/>
               </View>
@@ -101,11 +101,12 @@ const Styles = StyleSheet.create({
     paddingTop: 30,
     paddingBottom: 30,
     paddingLeft: 25,
-    paddingRight: 35,
+    paddingRight: 45,
+
   },
   dayTime:{
     marginBottom: 20,
-    marginTop: 30
+    marginTop: 30,
   },
   times: {
     flexDirection: 'row',
@@ -146,6 +147,7 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     paddingLeft: 30,
     paddingRight: 30,
-    marginTop: 30
+    marginTop: 30,
+    marginBottom: 5
   }
 });

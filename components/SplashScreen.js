@@ -9,12 +9,12 @@ export default class SplashScreen extends Component {
   componentWillMount(){
     setTimeout(() => {
       this.props.navigation.navigate('Home');
-    }, 1500);
+    }, 2000);
   }
 
   render(){
     return(
-      <View style={{backgroundColor: "#0E0000", flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{backgroundColor: "#000000", flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <Image
           source={require('../assets/images/splashImage.jpg')}
           style={{}}

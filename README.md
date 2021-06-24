@@ -15,3 +15,5 @@ commands to run:
 # Fonctionalités a rajouter:
 * filtre pour les semaines
 
+# Bugs after testing apk:
+* linear gradient on home page

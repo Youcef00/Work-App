@@ -32,7 +32,7 @@ export default class Home extends Component  {
         source= {require('../assets/images/background.jpg')}
         style={{width: '100%', height: '100%', flex: 1}}
        >
-      <View style={{backgroundColor: 'black', borderBottomRightRadius: 30, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{backgroundColor: 'black', justifyContent: 'center', alignItems: 'center'}}>
       <Image
         source={require('../assets/images/cover.jpg')}
         style={Styles.image}

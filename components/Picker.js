@@ -62,7 +62,7 @@ export default class Picker extends Component{
             value={this.state.date}
 
             onChangeText={this.handleOnChange}
-            style={{marginRight: 10, fontSize: 30, color: 'white', width: 100}}
+            style={{marginRight: 10, fontSize: 30, color: 'white', width: 90}}
         />
         {this.state.icon}
 

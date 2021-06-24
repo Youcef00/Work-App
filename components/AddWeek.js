@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, Button, StyleSheet, ScrollView, Image} from 'react-native';
+import {Text, View, TouchableOpacity, Button, StyleSheet, ScrollView, Image, Keyboard} from 'react-native';
 import Day from './Day.js';
 import { TextInputMask } from 'react-native-masked-text';
 
@@ -9,7 +9,7 @@ export default class AddWeek extends Component {
     this.today = new Date(Date.now());
     this.state = {
       data: this.props.route.params.data,
-
+      showButton: true,
       week : {    id: '',
                   title: '',
                   Lundi: {matin: {debut: '', fin: ''}, soir:{debut: '', fin: ''}, date: new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()-this.today.getDay()+1)},
@@ -29,8 +29,26 @@ export default class AddWeek extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.isValid = this.isValid.bind(this);
     this.stringFormat = this.stringFormat.bind(this);
+    this.keyboardDidShow = this.keyboardDidShow.bind(this);
+    this.keyboardDidHide = this.keyboardDidHide.bind(this);
     }
 
+componentWillMount(){
+  this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
+  this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
+}
+
+keyboardDidShow () {
+    this.setState({
+      showButton: false,
+    });
+  }
+
+keyboardDidHide () {
+  this.setState({
+    showButton: true,
+  });
+  }
 componentDidMount(){
   let newWeek = this.state.week;
   if (this.state.data.length !== 0){
@@ -45,6 +63,11 @@ componentDidMount(){
   }
 );
 }
+
+componentWillUnmount () {
+    this.keyboardDidShowListener.remove();
+    this.keyboardDidHideListener.remove();
+  }
   handleDayUpdate(dayName, newDate){
     let newWeek = this.state.week;
     newWeek[dayName] = newDate;
@@ -152,9 +175,10 @@ componentDidMount(){
                 </ScrollView>
               </View>
               <View style={{flex: .001}}>
+              {this.state.showButton &&
                 <TouchableOpacity style={Styles.button} onPress={this.handleOnPress} >
-                  <Text style={{color: 'white', fontSize: 25, marginRight: 'auto'}}>Confirm</Text>
-                </TouchableOpacity>
+                  <Text style={{color: 'white', fontSize: 25, marginRight: 'auto', marginLeft: 'auto'}}>Confirmer</Text>
+                </TouchableOpacity>}
               </View>
             </View>
         </View>
@@ -179,7 +203,8 @@ const Styles = StyleSheet.create(
       borderTopLeftRadius: 65,
       padding: 30,
       flex: 1,
-      paddingBottom: 60
+      paddingBottom: 50,
+
     },
     touchableDay: {
       backgroundColor: '#9896a4',
