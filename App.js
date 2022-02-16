@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+//import 'react-native-gesture-handler';
 import React, {Component, useState} from 'react';
 import {View, Text, Image} from 'react-native'
 import Home from './screens/Home.js';
