@@ -9,15 +9,13 @@ Les commandes à exécuter:
 % react-native run-android
 ```
 images de l'application
-| écran de chargement avec logo du restaurant |  écran d'acceuil |
+| **écran de chargement avec logo du restaurant** |  **écran d'acceuil** |
 |--|--|
 |  ![écran de chargement](images/loading_screen.jpg)|  ![écran d'aceuil](images/home_screen.jpg) |
-| écran d'acceuil avec données | écran mise à jour de semaine vide |
+| **écran d'acceuil avec données** | **écran mise à jour de semaine vide** |
 |![écran d'acceuil avec données](images/home_screen_with_data.jpg) |   ![écran mise à jour de semaine](images/updateWeek_screen.jpg) |
-| écran mise à jour d'une journée vide | écran mise à jour d'une journée |
-| ![écran mise à jour d'une journée vide](images/updateDay_screen_empty.jpg) |
-![écran mise à jour d'une journée](images/updateDay_screen_filled.jpg) |
-
+| **écran mise à jour d'une journée vide** | **écran mise à jour d'une journée** |
+|![écran mise à jour d'une journée vide](images/updateDay_screen_empty.jpg)  | ![écran mise à jour d'une journée](images/updateDay_screen_filled.jpg)  |
 
 
 
