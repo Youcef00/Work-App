@@ -23,7 +23,8 @@ images de l'application
 ### Remarques
 * Premier projet en **React Native**.
 * Projet n'est pas encore fini, il manque des fonctionalitées a rajouter et des bugs a régler.
- 
+ * Quand on écrit une nouvelle et il y'a une croix **X** ceci veut dire que le format est incorrect et si ce n'est pas corrigé la saisie de cette heure n'est pas sauvegarder pour assurer le bon fonctioonement de l'application.
+  
 ## Notes personnelles:
 * Faut mettre à jour les icones pour ios.
 
